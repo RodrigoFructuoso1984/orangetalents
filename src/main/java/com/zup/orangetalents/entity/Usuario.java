@@ -9,9 +9,11 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String nome;
+    @Column(unique = true)
     private String cpf;
     @Column(name = "data_nascimento")
     private LocalDate dataNascimento;
+    @Column(unique = true)
     private String email;
 
     public int getId() {
