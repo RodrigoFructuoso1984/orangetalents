@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
+
 
 @RestController
 @RequestMapping("/vacina")
@@ -19,7 +21,11 @@ public class VacinaController {
 
     @PostMapping("/aplicar")
     public ResponseEntity<AplicadorVacina> aplicar(@RequestBody AplicadorVacina aplicadorVacina) {
-        AplicadorVacina aplicadorCriado = aplicadorVacinaService.save(aplicadorVacina);
-        return ResponseEntity.status(HttpStatus.CREATED).body(aplicadorCriado);
+        try {
+            AplicadorVacina aplicadorCriado = aplicadorVacinaService.save(aplicadorVacina);
+            return ResponseEntity.status(HttpStatus.CREATED).body(aplicadorCriado);
+        } catch (Exception exception){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
     }
 }

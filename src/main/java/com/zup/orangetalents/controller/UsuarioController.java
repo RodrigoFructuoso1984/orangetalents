@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/usuario")
@@ -19,7 +20,10 @@ public class UsuarioController {
 
     @PostMapping
     public ResponseEntity<Usuario> save(@RequestBody Usuario usuario) {
-        Usuario usuarioCriado = usuarioRepository.save(usuario);
+       try { Usuario usuarioCriado = usuarioRepository.save(usuario);
         return ResponseEntity.status(HttpStatus.CREATED).body(usuarioCriado);
+       } catch (Exception exception){
+           throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+       }
     }
 }

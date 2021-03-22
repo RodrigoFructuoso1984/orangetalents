@@ -21,4 +21,5 @@ public class AplicadorVacinaService {
         }
         return aplicadorCriado.get();
     }
+
 }
